@@ -7,45 +7,84 @@ let getRandomNumber = (first,second) => Math.floor(Math.random()*(second-first)+
 
 let getComputerValue = ()=>possibleValues[getRandomNumber(0,possibleValues.length)];
 
-let getHumanValue = () => prompt("Type Action (Rock, Paper, Scissor)")
+let buttons = document.querySelectorAll("button");
+
+let playerImage = document.querySelector("#humanAction")
+let computerImage = document.querySelector("#computerAction")
+let playerScoreText = document.querySelector("#player-score")
+let computerScoreText = document.querySelector("#computer-score")
+
+
+
+buttons.forEach(button =>{
+    button.addEventListener("click" , (e)=>{
+        let playerSelection;
+        if(e.target.id==="rock"){
+            playerImage.setAttribute("src","images/rock.jpg")
+            playerImage.setAttribute("alt","rock")
+            playerSelection = "rock"
+        }
+        if(e.target.id==="paper"){
+            playerImage.setAttribute("src","images/paper.jpg")
+            playerImage.setAttribute("alt","paper")
+            playerSelection = "paper"
+        }
+        if(e.target.id==="scissor"){
+            playerImage.setAttribute("src","images/scissor.jpg")
+            playerImage.setAttribute("alt","scissor")
+            playerSelection = "scissor"
+        }
+        playerImage.style.display="block"
+        const computerSelection = getComputerValue();
+        playRound(playerSelection,computerSelection)
+    })
+})
 
 
 function playRound(humanChoice, computerChoice) {
-    const newHumanChoice = humanChoice.toString().toLowerCase()
-    const newComputerChoice = computerChoice.toString().toLowerCase()
-    const values = [newHumanChoice,newComputerChoice]
-    if(!possibleValues.includes(newComputerChoice) || !possibleValues.includes(newHumanChoice)){
-        humanSelection = prompt("Please type correctly")
-        playRound(humanSelection,computerChoice)
-        return;
+    computerImage.setAttribute("src","images/"+computerChoice+".jpg")
+    computerImage.style.display="block"
+    if(humanChoice === computerChoice) {
+        return
     }
-    if(newHumanChoice === computerChoice)
-        prompt("Draw")
+    if((humanChoice === "rock" && computerChoice ==="scissor") ||
+    (humanChoice === "paper" && computerChoice ==="rock") ||
+        (humanChoice === "scissor" && computerChoice ==="paper")){
+        playerScore++;
+    }
     else
-        if(values.includes("rock")){
-            if(values.includes("scissor"))
-                prompt("Rock Wins")
-            else if(values.includes("paper"))
-                prompt("Paper Wins")
-        }
-    else if(values.includes("paper")){
-        if(values.includes("scissor"))
-            prompt("Scissor Wins")
-        else if(values.includes("rock"))
-            prompt("Paper Wins")
+        computerScore++;
+
+    updateScoreText(playerScore,computerScore)
+    if(playerScore >= 5){
+        prompt("You Won!!!")
+        resetGame()
     }
-    else if(values.includes("scissor")){
-        if(values.includes("rock"))
-            prompt("Rock Wins")
-        else if(values.includes("paper"))
-            prompt("Scissor Wins")
+    else if(computerScore >= 5){
+        prompt("Game Over :(((")
+        resetGame()
     }
 }
 
-let humanSelection = getHumanValue();
-const computerSelection = getComputerValue();
+
+function updateScoreText(player,computer) {
+    playerScoreText.textContent = "Player Score: "+player;
+    computerScoreText.textContent = "Computer Score: "+computer;
+
+}
 
 
-playRound(humanSelection, computerSelection);
+function resetGame(){
+    computerImage.style.display="none"
+    playerImage.style.display="none"
+    computerImage.setAttribute("src","")
+    playerImage.setAttribute("src","")
+    playerScore = 0
+    computerScore = 0
+    updateScoreText(playerScore,computerScore)
+
+}
+
+
 
 

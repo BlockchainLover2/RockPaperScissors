@@ -1,0 +1,55 @@
+body{
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+
+}
+.image,img{
+    height: 300px;
+    width: 300px
+}
+img{
+    display: none;
+}
+
+.information{
+    color: blueviolet;
+    font-size: 32px;
+    padding: 50px;
+}
+
+.game-container{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 256px;
+    padding-top: 25px;
+}
+
+.image-container{
+
+}
+
+.image-container p{
+    text-align: center;
+}
+
+.up{
+    flex: 1;
+    display: flex;
+}
+.down{
+    display: flex;
+    justify-content: center;
+    align-items:flex-start;
+    gap: 128px;
+    flex: 1;
+}
+button{
+    background-color: deepskyblue;
+    border: deepskyblue;
+    border-radius: 8px;
+    padding: 24px 72px;
+    font-size: 24px;
+}
+
